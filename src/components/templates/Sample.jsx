@@ -17,7 +17,7 @@ function Sample() {
   async function downloadPDF() {
     try {
       setDownloading(true);
-      const response = await fetch("http://localhost:3000/generate", {
+      const response = await fetch("https://resumebuilder-server.onrender.com/generate", {
         method: "POST",
         headers: {
           "content-type": "application/json",
