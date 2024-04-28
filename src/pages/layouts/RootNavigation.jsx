@@ -18,6 +18,7 @@ import { adminsId } from "../../utils/helpers";
 const RootNavigation = () => {
   const [showDropDown, setShowDropDown] = useState(false);
   const { data, isLoading } = useUser();
+  if(data) console.log(data);
   const queryClient = useQueryClient();
 
   const handleDropDown = () => {
@@ -156,7 +157,7 @@ const RootNavigation = () => {
         </div>
       </nav>
       <ToastContainer containerId='signed-out' autoClose={2000} />
-
+      <ToastContainer containerId="saved" autoClose={2000} />
       <Outlet />
       <Footer />
     </div>

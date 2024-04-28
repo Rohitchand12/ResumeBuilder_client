@@ -2,7 +2,6 @@ import React,{useEffect} from "react";
 import {
   GoogleAuthProvider,
   GithubAuthProvider,
-  signInWithRedirect,
   signInWithPopup,
 } from "firebase/auth";
 import {useQueryClient} from "@tanstack/react-query"
@@ -18,7 +17,8 @@ const AuthenticationButtons = ({ text, Icon, provider }) => {
   const handleSignIn = async () => {
     if (provider === "GoogleAuthProvider") {
       await signInWithPopup(auth, googleAuthProvider)
-        .then(() => {
+        .then((usercred) => {
+          console.log(usercred);
           console.log("signed in");
           queryClient.invalidateQueries(['users'])
         })

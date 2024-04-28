@@ -16,6 +16,7 @@ const EducationCard = ({
         hidden:{opacity:0,y:50},
         visible:{opacity:1,y:0}
     }}
+    layout
     className='grid grid-cols-12 rounded-lg px-5 py-5 w-[80%] shadow-[0_3px_10px_rgb(0,0,0,0.2)]'>
         <div className='flex flex-col col-span-10 gap-3 '>
             <h1 className='text-2xl font-bold text-violet-600'>{education.qualification}</h1>

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { db } from "../../firebase/firebaseConfig";
 import { useForm } from "react-hook-form";
 import Input from "../ui/Input";
@@ -6,25 +6,41 @@ import Button from "../ui/Button";
 import useUser from "../../hooks/useUser";
 import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { toast, ToastContainer } from "react-toastify";
-import { useNavigate, useOutletContext, useParams } from "react-router-dom";
+import { useBlocker, useNavigate, useParams } from "react-router-dom";
 import useResume from "../../hooks/useResume";
 import MainSpinner from "../MainSpinner";
 import { motion } from "framer-motion";
+import Modal from "../ui/Modal";
+import NavigationConfirmation from "../ui/NavigationConfirmation";
 
 const BasicDetails = () => {
+  //states
   const [preloadData, setPreloadData] = useState(null);
-  const { templateId, resumeId, resumeName } = useParams();
-  const navigate = useNavigate();
-  const { data: user } = useUser();
-  const { data: resumes, isLoading } = useResume();
+  
+  //refs
+  const formRef = useRef();
+  
+  //react hook form
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors, isSubmitting, isDirty},
     reset,
   } = useForm({
     defaultValues: { ...preloadData },
   });
+  
+  //other hooks
+  const { templateId, resumeId, resumeName } = useParams();
+  const navigate = useNavigate();
+  const { data: user } = useUser();
+  const { data: resumes, isLoading } = useResume();
+
+
+  //debugging console statements
+
+
+  ///////SideEffects//////////
   useEffect(() => {
     reset(preloadData);
   }, [preloadData]);
@@ -38,7 +54,10 @@ const BasicDetails = () => {
     }
   }, [resumes, isLoading]);
 
-  const submitHandler = async (data) => {
+  // HANDLER functions
+
+  //submit handler
+  async function submitHandler(data){
     const docRef = doc(db, `users/${user.uid}/resumeCollection/${resumeId}`);
     const docData = await getDoc(docRef);
 
@@ -48,21 +67,32 @@ const BasicDetails = () => {
     if (docData.exists()) {
       await updateDoc(docRef, { basicDetails: basicDetailsData });
     } else {
-      await setDoc(docRef, {templateId, resumeName, basicDetails: basicDetailsData });
+      await setDoc(docRef, {
+        templateId,
+        resumeName,
+        basicDetails: basicDetailsData,
+      });
     }
-
     toast.success("Saved successfully", {
       containerId: "saved",
       autoClose: 2000,
     });
-    navigate(`/templates/${templateId}/${resumeId}/${resumeName}/build/education`)
+  
+    navigate(
+      `/templates/${templateId}/${resumeId}/${resumeName}/build/education`
+    );
   };
+
+  //loading handler
+
   if (isLoading) {
     return <MainSpinner />;
   }
+
+  //JSX
   return (
     <section>
-      <form onSubmit={handleSubmit(submitHandler)}>
+      <form ref ={formRef} onSubmit={handleSubmit(submitHandler)}>
         <motion.div
           variants={{
             hidden: { opacity: 0 },
@@ -202,7 +232,11 @@ const BasicDetails = () => {
           />
         </motion.div>
       </form>
-      <ToastContainer containerId="saved" autoClose={2000} />
+      {/* {blocker.state === 'blocked' && (
+        <Modal isOpen={blocker.state === 'blocked' && Object.keys(errors).length === 0} onClose={()=>blocker.reset()}>
+          <NavigationConfirmation isSubmitting={isSubmitting} onConfirm ={()=>formRef.current.requestSubmit()} onClose={()=>blocker.proceed()} />
+        </Modal>
+      )} */}
     </section>
   );
 };

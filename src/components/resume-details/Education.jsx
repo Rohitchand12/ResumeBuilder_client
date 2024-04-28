@@ -156,7 +156,7 @@ const Education = () => {
         currentResume.resumeData.EducationDetails?.map((education, index) => {
           return (
             <EducationCard
-              key={crypto.randomUUID()}
+              key={index}
               education={education}
               index={index}
               onDelete={() => {
