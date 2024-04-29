@@ -23,7 +23,7 @@ const UserResumes = () => {
         }}
         initial='hidden'
         animate='visible'
-        className="min-h-screen grid grid-cols-12 gap-10 py-10 px-8">
+        className="min-h-screen grid grid-cols-12 lg:gap-10 lg:py-10 lg:px-8 place-items-center">
           <motion.div
             variants={{
               hidden:{opacity:0,y:40},
@@ -31,7 +31,7 @@ const UserResumes = () => {
             }}
             whileHover={{ scale: 1.1 }}
             transition={{ type: "spring", duration: 0.5 }}
-            className="flex flex-col gap-2 justify-center items-center bg-violet-500 p-5 shadow-[0_3px_10px_rgb(0,0,0,0.2)] rounded-md h-[30vh] col-span-4"
+            className="flex flex-col gap-2 justify-center w-3/4 h-[80%] px-4 py-2 lg:w-full items-center bg-violet-500 shadow-[0_3px_10px_rgb(0,0,0,0.2)] rounded-md  col-span-12 md:col-span-6 lg:col-span-4"
           >
             <motion.button
               onClick={() => navigate("/templates")}

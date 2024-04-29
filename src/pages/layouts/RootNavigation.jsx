@@ -1,4 +1,4 @@
-import React, {useState } from "react";
+import React, { useState } from "react";
 import { Outlet, NavLink } from "react-router-dom";
 import icon from "../../assets/resume_icon.png";
 import Footer from "../../components/Footer";
@@ -12,13 +12,16 @@ import { useQueryClient } from "@tanstack/react-query";
 import { ToastContainer, toast } from "react-toastify";
 import { AnimatePresence, motion } from "framer-motion";
 import "react-toastify/dist/ReactToastify.css";
-
 import { adminsId } from "../../utils/helpers";
+import ExpandedNavbar from "../../components/ExpandedNavbar";
+import { GiHamburgerMenu } from "react-icons/gi";
+import { ImCross } from "react-icons/im";
 
 const RootNavigation = () => {
   const [showDropDown, setShowDropDown] = useState(false);
+  const [expand, setExpand] = useState(false);
   const { data, isLoading } = useUser();
-  if(data) console.log(data);
+  if (data) console.log(data);
   const queryClient = useQueryClient();
 
   const handleDropDown = () => {
@@ -26,15 +29,15 @@ const RootNavigation = () => {
   };
   const handleSignout = async () => {
     await auth.signOut().then(() => {
-      toast.error('Signed out',{containerId:'signed-out',autoClose:1000})
+      toast.error("Signed out", { containerId: "signed-out", autoClose: 1000 });
       queryClient.setQueryData(["users"], null);
-      queryClient.setQueryData(["users","resumes"] , null);
+      queryClient.setQueryData(["users", "resumes"], null);
     });
   };
   return (
     <div className="font-mooli overflow-clip relative">
-      <nav className="flex h-[10vh] justify-center items-center px-5 py-3 lg:px-8 lg:py-3 bg-white bg-opacity-35 backdrop-blur-sm sticky top-0 left-0 z-10 ">
-        <div className="flex justify-between w-full md:w-3/4">
+      <nav className="flex flex-col h-[8vh] lg:h-[10vh] justify-center items-center px-5 py-3 lg:px-8 lg:py-3 bg-white bg-opacity-35 backdrop-blur-md sticky top-0 left-0 z-10 ">
+        <div className="flex justify-between items-center w-full md:w-3/4">
           <NavLink to="/">
             <button className="flex justify-center items-center gap-3 text-base lg:text-2xl font-bold text-violet-600">
               <img
@@ -49,7 +52,9 @@ const RootNavigation = () => {
               <li className="hover:text-gray-500 hidden md:block">
                 <NavLink
                   className={({ isActive }) => {
-                    return isActive ? "pb-2 border-b-4 border-violet-600" : null;
+                    return isActive
+                      ? "pb-2 border-b-4 border-violet-600"
+                      : null;
                   }}
                   to="/"
                 >
@@ -59,7 +64,9 @@ const RootNavigation = () => {
               <li className="hover:text-gray-500 hidden md:block">
                 <NavLink
                   className={({ isActive }) => {
-                    return isActive ? " pb-2 border-b-4 border-violet-600" : null;
+                    return isActive
+                      ? " pb-2 border-b-4 border-violet-600"
+                      : null;
                   }}
                   to="/templates"
                 >
@@ -69,14 +76,16 @@ const RootNavigation = () => {
               <li className="hover:text-gray-500 hidden md:block">
                 <NavLink
                   className={({ isActive }) => {
-                    return isActive ? " pb-2 border-b-4 border-violet-600" : null;
+                    return isActive
+                      ? " pb-2 border-b-4 border-violet-600"
+                      : null;
                   }}
                   to="/myResumeCollection"
                 >
                   My resumes
                 </NavLink>
               </li>
-              <li>
+              <li className="flex gap-5 justify-center items-center">
                 {isLoading && (
                   <div>
                     <PuffLoader size={50} color="#7c3aed" />
@@ -97,9 +106,9 @@ const RootNavigation = () => {
                     <AnimatePresence>
                       {showDropDown && (
                         <motion.div
-                          initial={{opcaity:0,y:-50}}
-                          animate={{ opacity:1,y:0 }}
-                          exit={{opacity:0,y:-50}}
+                          initial={{ opcaity: 0, y: -50 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -50 }}
                           className="absolute w-80 right-0 py-10 gap-5 top-[120%] bg-white rounded-md"
                         >
                           <div className="h-full w-full flex justify-center items-center flex-col gap-8">
@@ -151,12 +160,17 @@ const RootNavigation = () => {
                     </NavLink>
                   )
                 )}
+                
+                {expand ? <ImCross onClick = {()=>setExpand(false)} className="text-base md:hidden"/> : <GiHamburgerMenu onClick={()=>setExpand(true)} className="text-base md:hidden" />}
               </li>
             </ul>
           </div>
         </div>
       </nav>
-      <ToastContainer containerId='signed-out' autoClose={2000} />
+      <AnimatePresence>
+        {expand && <ExpandedNavbar onClose={()=>setExpand(false)} />}
+      </AnimatePresence>
+      <ToastContainer containerId="signed-out" autoClose={2000} />
       <ToastContainer containerId="saved" autoClose={2000} />
       <Outlet />
       <Footer />
