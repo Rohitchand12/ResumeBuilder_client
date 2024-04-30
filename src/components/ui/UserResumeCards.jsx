@@ -22,7 +22,7 @@ const UserResumeCards = ({ Title, id, owner,templateId ,...props}) => {
   return (
     <motion.div
     {...props}
-    className="grid grid-cols-12 col-span-12 md:col-span-6 w-3/4 lg:w-full lg:col-span-4  rounded-md h-[80%] px-4 py-2 shadow-[0_3px_10px_rgb(0,0,0,0.2)]"
+    className="grid grid-cols-12 col-span-12 md:col-span-6 w-[90%] lg:w-full md:h-[30vh] lg:col-span-4  rounded-md px-4 py-2 shadow-[0_3px_10px_rgb(0,0,0,0.2)]"
       whileHover={{ scale: 1.1 }}
       transition={{ type: "spring", duration: 0.5 }}
     >

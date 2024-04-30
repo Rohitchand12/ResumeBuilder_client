@@ -1,17 +1,18 @@
 import React, { useState } from "react";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { NavLink, Outlet } from "react-router-dom";
 import { useNavigate, useParams } from "react-router-dom";
 import { resumeDetails } from "../utils/helpers";
+import Sidebar from "../components/Sidebar";
 
 const Information = () => {
+  const [expand,setExpand] = useState(false);
   const navigate = useNavigate();
   const { templateId, resumeId, resumeName, detail: details } = useParams();
 
   return (
     <main className="relative grid grid-cols-12 w-full h-screen">
       <motion.aside
-        // key={details}
         className="self-start hidden md:col-span-2 md:flex flex-col gap-2 sticky top-[10vh] left-0 shadow-[0_3px_10px_rgb(0,0,0,0.2)]"
       >
         {resumeDetails.map((detail, index) => {
@@ -20,11 +21,6 @@ const Information = () => {
               transition={{ type: "spring", duration: 0.5 }}
               whileHover={{ backgroundColor: "#c4b5fd", scale: 1.1 }}
               key={index}
-              // onClick={() => {
-              //   navigate(
-              //     `/templates/${templateId}/${resumeId}/${resumeName}/build/${detail.path}`
-              //   );
-              // }}
             >
               <NavLink
                 to={`/templates/${templateId}/${resumeId}/${resumeName}/build/${detail.path}`}
@@ -47,9 +43,12 @@ const Information = () => {
           Generate Resume
         </motion.button>
       </motion.aside>
+      <AnimatePresence>
+        {expand && <Sidebar templateId={templateId} resumeId={resumeId} resumeName={resumeName} onClose={()=>setExpand(false)}/>}
+      </AnimatePresence>
 
       {/* rendering forms here   */}
-      <Outlet />
+      <Outlet context={[expand,setExpand]} />
     </main>
   );
 };

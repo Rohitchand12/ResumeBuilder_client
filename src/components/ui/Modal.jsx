@@ -21,7 +21,7 @@ const Modal = ({ children,isOpen,onClose }) => {
       transition={{duration:0.2 , type:'spring'}}
       exit={{opacity:0,y:50}}
       ref={dialog}
-      className="backdrop:bg-[rgba(0,0,0,0.8)] relative rounded-md font-mooli"
+      className="backdrop:bg-[rgba(0,0,0,0.6)] relative rounded-md font-mooli"
     >
       {children}
       <form onSubmit={onClose} method="dialog" className="absolute top-0 right-0">
