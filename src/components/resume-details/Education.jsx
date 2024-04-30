@@ -118,19 +118,8 @@ const Education = () => {
       }}
       initial="hidden"
       animate="visible"
-      className=" flex flex-col gap-4 justify-start items-center py-10"
+      className=" flex flex-col gap-4 overflow-x-hidden justify-start items-center py-10"
     >
-      <Button
-        disabled={isSubmitting}
-        name={isSubmitting ? "Saving..." : "Save and next"}
-        onClick={() => {
-          navigate(
-            `/templates/${templateId}/${resumeId}/${resumeName}/build/internships`
-          );
-        }}
-        classname={`bg-violet-500 disabled:bg-gray-500 text-white place-self-end mr-10`}
-      />
-
       <div className="flex flex-col gap-3 justify-center items-center mb-3">
         <motion.button
           variants={{
@@ -145,6 +134,17 @@ const Education = () => {
           +
         </motion.button>
         <h1 className="text-xl font-semibold">Add Education</h1>
+        <Button
+        disabled={isSubmitting}
+        name={isSubmitting ? "Saving..." : "Save and next"}
+        onClick={() => {
+          navigate(
+            `/templates/${templateId}/${resumeId}/${resumeName}/build/internships`
+          );
+        }}
+        classname={`bg-violet-500 disabled:bg-gray-500 text-white`}
+      />
+
       </div>
 
       {isSubmitting ? (
@@ -190,7 +190,7 @@ const Education = () => {
               }}
               initial="hidden"
               animate="visible"
-              className="grid grid-cols-12 gap-2 px-10 py-10 w-[800px]"
+              className="grid grid-cols-12 gap-2 px-10 py-10 max-h-[50vh] lg:h-auto lg:w-[800px]"
               onSubmit={handleSubmit(submitHandler)}
             >
               <Input
@@ -209,7 +209,7 @@ const Education = () => {
                 label="Course"
                 placeholder="eg: Btech"
                 error={errors.course}
-                col="col-span-6"
+                col="col-span-12 lg:col-span-6"
                 {...register("course", {
                   required: {
                     value: true,
@@ -221,7 +221,7 @@ const Education = () => {
                 label="Branch"
                 placeholder="eg: Computer science"
                 error={errors.branch}
-                col="col-span-6"
+                col="col-span-12 lg:col-span-6"
                 {...register("branch", {
                   required: {
                     value: true,
@@ -247,7 +247,7 @@ const Education = () => {
                 error={errors.grades}
                 type="number"
                 step="0.01"
-                col="col-span-4"
+                col="col-span-12 lg:col-span-4"
                 {...register("grades", {
                   required: {
                     value: true,
@@ -260,7 +260,7 @@ const Education = () => {
                 placeholder="2018"
                 error={errors.fromyear}
                 type="number"
-                col="col-span-4"
+                col="col-span-6 lg:col-span-4"
                 {...register("fromyear", {
                   required: {
                     value: true,
@@ -273,7 +273,7 @@ const Education = () => {
                 placeholder="2019"
                 error={errors.toyear}
                 type="number"
-                col="col-span-4"
+                col="col-span-6 lg:col-span-4"
                 {...register("toyear", {
                   required: {
                     value: true,
@@ -283,7 +283,7 @@ const Education = () => {
               />
               <button
                 disabled={isSubmitting}
-                className="bg-violet-500 disabled:bg-violet-950 px-4 py-2 rounded-md col-start-10 col-span-3 text-white"
+                className="bg-violet-500 disabled:bg-violet-950 px-4 py-2 rounded-md lg:col-start-10 col-span-12 lg:col-span-3 text-white"
               >
                 {editing.value && !isSubmitting
                   ? "Save changes"

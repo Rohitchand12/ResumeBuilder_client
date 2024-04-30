@@ -7,9 +7,9 @@ const Input = ({ label, classname, isRequired, col, error, ...props }, ref) => {
         hidden: { opacity: 0, y: 20 },
         visible: { opacity: 1, y: 0 },
       }}
-      className={`mb-8 text-sm ${col}`}
+      className={`mb-2 lg:mb-8 text-sm ${col}`}
     >
-      <label htmlFor={label}>
+      <label htmlFor={label} className="font-semibold">
         {label}
         {isRequired && <span className="text-red-500">*</span>}
       </label>

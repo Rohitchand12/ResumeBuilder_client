@@ -13,20 +13,23 @@ function InternshipCard({ internship, index, onDelete, onEdit, ...props }) {
         hidden: { opacity: 0, y: 50 },
         visible: { opacity: 1, y: 0 },
       }}
-      className="grid grid-cols-12 rounded-lg px-5 py-5 w-[80%] shadow-[0_3px_10px_rgb(0,0,0,0.2)]"
+      className="grid grid-cols-12 rounded-lg px-5 py-5 w-[90%] lg:w-[80%] shadow-[0_3px_10px_rgb(0,0,0,0.2)]"
     >
       <div className="flex flex-col col-span-9 gap-3 ">
-        <h1 className="text-2xl font-extrabold text-violet-600">
+        <h1 className="text-xl lg:text-2xl font-extrabold text-violet-600">
           {internship.company}
         </h1>
-        <h2 className="text-xl font-semibold">{`${internship.role}`}</h2>
+        <h2 className="text-base lg:text-xl font-semibold">{`${internship.role}`}</h2>
         <h2 className="text-sm font-semibold text-blue-500">
           <a
             href={internship.certificate}
             target="_blank"
-          >{`${internship.certificate}`}</a>
+          >certificate</a>
         </h2>
-        <ul className="list-disc list-inside pl-[10px]">
+        <div className="block lg:hidden text-sm place-items-center">{`${formatDate(
+          internship.from
+        )} to ${formatDate(internship.to)}`}</div>
+        <ul className="hidden lg:block list-disc list-inside pl-[10px]">
           {internship.description &&
             splitSentences(internship.description).map((desc, index) => (
               <li key={index}>{desc}</li>
@@ -34,10 +37,10 @@ function InternshipCard({ internship, index, onDelete, onEdit, ...props }) {
         </ul>
       </div>
       <div className="grid col-span-3 gap-5">
-        <div className="text-sm grid place-items-center">{`${formatDate(
+        <div className="hidden lg:grid text-sm place-items-center">{`${formatDate(
           internship.from
         )} to ${formatDate(internship.to)}`}</div>
-        <div className="flex justify-center items-center gap-5">
+        <div className="flex flex-col lg:flex-row justify-center items-center gap-5">
           <button
             onClick={() => onEdit(index)}
             className="text-xl text-violet-500 h-10 w-10 rounded-full flex items-center justify-center bg-gray-200"

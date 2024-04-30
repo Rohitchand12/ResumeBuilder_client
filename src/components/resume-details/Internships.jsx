@@ -187,7 +187,7 @@ const Internships = () => {
               }}
               initial="hidden"
               animate="visible"
-              className="grid grid-cols-12 gap-2 px-10 py-10 w-[800px]"
+              className="grid grid-cols-12 gap-2 px-10 py-10 h-auto lg:w-[800px]"
               onSubmit={handleSubmit(submitHandler)}
             >
               <Input
@@ -217,7 +217,7 @@ const Internships = () => {
                   },
                 })}
               />
-              <div className="col-span-3 flex flex-col">
+              <div className="col-span-6 lg:col-span-3 flex flex-col">
                 <label>from</label>
                 <input
                 className="w-full py-4 px-4 outline-none focus:border-slate-400 border-2 border-gray-200 rounded-md"
@@ -230,7 +230,7 @@ const Internships = () => {
                   })}
                 />
               </div>
-              <div className="col-span-3 flex flex-col">
+              <div className="col-span-6 lg:col-span-3 flex flex-col">
                 <label>to</label>
                 <input
                 className="w-full py-4 px-4 outline-none focus:border-slate-400 border-2 border-gray-200 rounded-md"
@@ -247,7 +247,7 @@ const Internships = () => {
                 label="Certificate Link"
                 placeholder="Link"
                 error={errors.certificate}
-                col="col-span-6"
+                col="col-span-12 lg:col-span-6"
                 {...register("certificate")}
               />
               <label>Description</label>
